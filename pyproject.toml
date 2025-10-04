@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rl-il-playground"
+version = "0.0.1"
+requires-python = ">=3.10"
+readme = "README.md"
+license = {text = "MIT"}
+
+# ↑ 여기([project])에는 'packages' 두지 말 것
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["RL*"]   # RL, RL.algorithms, RL.models 등 포함
