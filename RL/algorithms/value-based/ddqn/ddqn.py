@@ -4,7 +4,7 @@ import torch.optim as optim
 
 import numpy as np
 
-from RL.models.MLP import QNet
+from RL.models.MLP import DiscreteMLP
 from RL.utils.memory import ReplayBuffer
 from RL.environments.cartpole import CartPole as env
 
@@ -19,9 +19,9 @@ class DQNAgent:
         self.action_dim = action_dim
         
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.q_net = QNet(state_dim, hidden_dim, action_dim).to(self.device)
+        self.q_net = DiscreteMLP(state_dim, hidden_dim, action_dim).to(self.device)
         # Target Q Network
-        self.target_q_net = QNet(state_dim, hidden_dim, action_dim).to(self.device)
+        self.target_q_net = DiscreteMLP(state_dim, hidden_dim, action_dim).to(self.device)
         self.target_q_net.load_state_dict(self.q_net.state_dict())
         
         self.optimizer = optim.Adam(self.q_net.parameters(), lr=lr)
@@ -120,7 +120,7 @@ torch.save(dqn_agent.q_net.state_dict(), "ddqn_cartpole.pth")
 
 ### Evaluation ###
 import gymnasium as gym
-agent = QNet(state_dim, hidden_dim, action_dim)
+agent = DiscreteMLP(state_dim, hidden_dim, action_dim)
 agent.load_state_dict(torch.load("ddqn_cartpole.pth"))
 
 env = gym.make("CartPole-v1", render_mode="human")
