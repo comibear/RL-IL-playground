@@ -1,0 +1,9 @@
+repos:
+  - repo: local
+    hooks:
+      - id: update-algorithms-readme
+        name: Update algorithms tree in README
+        entry: python scripts/update_algorithms_readme.py
+        language: system
+        pass_filenames: false
+        stages: [commit, push]
